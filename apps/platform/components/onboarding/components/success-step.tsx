@@ -1,32 +1,29 @@
-"use client";
-
 import { useEffect } from "react";
 import { motion } from "framer-motion";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { CheckCircle2, Sparkles } from "lucide-react";
 import { AnimatedButton } from "@/components/ui/animated-button";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 interface SuccessStepProps {
   workspaceName: string;
 }
 
 export function SuccessStep({ workspaceName }: SuccessStepProps) {
-  // Confetti effect
-  const navigate = useRouter();
+  const router = useRouter();
 
   useEffect(() => {
-    navigate.prefetch('/');
-  }, [navigate])
+    router.prefetch('/');
+  }, [router]);
 
   useEffect(() => {
     const confetti = async () => {
       const { default: confetti } = await import("canvas-confetti"!);
 
       const end = Date.now() + 1000;
-
       const colors = ["#9333ea", "#4f46e5", "#3b82f6"];
-      (function frame() {
+
+      function frame() {
         confetti({
           particleCount: 3,
           angle: 60,
@@ -46,14 +43,21 @@ export function SuccessStep({ workspaceName }: SuccessStepProps) {
         if (Date.now() < end) {
           requestAnimationFrame(frame);
         }
-      })();
+      }
+
+      frame();
     };
 
     confetti();
-    setTimeout(() => {
-      navigate.push('/');
-    }, 500);
-  }, []);
+
+    // Instead of using timeout, consider delaying after the animation finishes
+    const timer = setTimeout(() => {
+      router.push('/');
+    }, 1500); // Delay to give enough time for the confetti to finish and the animation to complete
+
+    return () => clearTimeout(timer); // Clean up the timeout on unmount
+  }, [router]);
+
   const checkVariants = {
     hidden: { pathLength: 0, opacity: 0 },
     visible: {
@@ -74,6 +78,7 @@ export function SuccessStep({ workspaceName }: SuccessStepProps) {
       transition={{ duration: 0.5 }}
       className="flex flex-col items-center text-center"
     >
+      {/* Success Icon */}
       <motion.div
         className="h-24 w-24 rounded-full bg-purple-500/20 flex items-center justify-center mb-8 relative"
         initial={{ scale: 0.8, opacity: 0 }}
@@ -131,6 +136,7 @@ export function SuccessStep({ workspaceName }: SuccessStepProps) {
         ready to use. Start creating content or explore the dashboard.
       </motion.p>
 
+      {/* Setup List */}
       <motion.div
         className="w-full max-w-md bg-slate-800/50 rounded-xl p-6 mb-10 border border-slate-700"
         initial={{ opacity: 0, y: 20 }}
@@ -169,6 +175,7 @@ export function SuccessStep({ workspaceName }: SuccessStepProps) {
         </ul>
       </motion.div>
 
+      {/* Buttons */}
       <motion.div
         className="flex flex-col sm:flex-row gap-4 w-full max-w-md"
         initial={{ opacity: 0, y: 20 }}
@@ -177,12 +184,6 @@ export function SuccessStep({ workspaceName }: SuccessStepProps) {
       >
         <AnimatedButton className="flex-1 gap-2" size="lg">
           <Link href="/">Launch Dashboard</Link>
-        </AnimatedButton>
-
-        <AnimatedButton variant="outline" className="flex-1 gap-2" size="lg">
-          <Link href="/templates">
-            <Sparkles className="h-10 w-10" /> Browse Templates
-          </Link>
         </AnimatedButton>
       </motion.div>
     </motion.div>
