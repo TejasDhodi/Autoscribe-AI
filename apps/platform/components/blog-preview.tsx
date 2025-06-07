@@ -24,7 +24,7 @@ const BlogPreview = ({ setPreviewOpen, blogId }: BlogPreviewProps) => {
   const fetchBlogContent = async () => {
     try {
       const { status, data } = await axios.get(
-        `http://localhost:8000/api/v1/blog/${blogId}`
+        `https://autoscribe-ai.onrender.com/api/v1/blog/${blogId}`
       );
 
       if (status === 200) {

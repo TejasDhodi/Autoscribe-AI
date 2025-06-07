@@ -51,7 +51,7 @@ export function GeneratedBlogs() {
   const getAllBlogs = async () => {
     try {
       const { status, data } = await axios.get(
-        "http://localhost:8000/api/v1/blogs"
+        "https://autoscribe-ai.onrender.com/api/v1/blogs"
       );
       if (status === 200) {
         setBlogData(data.blogs);
@@ -97,7 +97,7 @@ export function GeneratedBlogs() {
 
   const handleDeleteBlog = async (blogId: string) => {
     try {
-      const response = await axios.delete(`http://localhost:8000/api/v1/blog/delete/${blogId}`);
+      const response = await axios.delete(`https://autoscribe-ai.onrender.com/api/v1/blog/delete/${blogId}`);
 
       if(response.status === 200) {
         toast.success("Blog Deletd Successfully")

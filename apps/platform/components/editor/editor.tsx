@@ -70,7 +70,7 @@ export function EditorContainer({
   const fetchBlogContent = async () => {
     try {      
       const { status, data } = await axios.get(
-        `http://localhost:8000/api/v1/blog/${blogId}`
+        `https://autoscribe-ai.onrender.com/api/v1/blog/${blogId}`
       );
 
       if (status === 200) {
@@ -92,7 +92,7 @@ export function EditorContainer({
     
     try {
       const res = await axios.put(
-        `http://localhost:8000/api/v1/blog/update/${blogId}`,
+        `https://autoscribe-ai.onrender.com/api/v1/blog/update/${blogId}`,
         {
           blogContent : htmlContent,
         }

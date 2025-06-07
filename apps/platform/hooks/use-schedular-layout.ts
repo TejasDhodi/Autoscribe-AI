@@ -47,7 +47,7 @@ export const useSchedularLayout = () => {
         const blogData: localBlogData = JSON.parse(stored);
         blogBody = blogData.blogContent;
       }
-      const res = await axios.post("http://localhost:8000/api/v1/cron/create", {
+      const res = await axios.post("https://autoscribe-ai.onrender.com/api/v1/cron/create", {
         scheduleName,
         frequency,
         time,

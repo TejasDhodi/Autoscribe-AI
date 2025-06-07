@@ -165,7 +165,7 @@ export const useUserUploadsLayout = ({
       
       try {
         setIsUploading(true);
-        const response = await axios.post("http://localhost:8000/api/v1/storeCsv", {
+        const response = await axios.post("https://autoscribe-ai.onrender.com/api/v1/storeCsv", {
           fileName,
           emailList
         })
@@ -188,7 +188,7 @@ export const useUserUploadsLayout = ({
 
   const onDeleteEmailListHandler = useCallback(async (id: string) => {
       try {
-        const {status} = await axios.delete(`http://localhost:8000/api/v1/emails/delete/${id}`);
+        const {status} = await axios.delete(`https://autoscribe-ai.onrender.com/api/v1/emails/delete/${id}`);
 
         if(status === 200) {
           getLastestEmailListsData();

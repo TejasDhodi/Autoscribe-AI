@@ -37,7 +37,7 @@ export function DashboardProvider({ children }: IDashboardProvider) {
 
   const getLastestEmailListsData = useCallback(async () => {
       try {
-        const {status, data} = await axios.get("http://localhost:8000/api/v1/emailLists");
+        const {status, data} = await axios.get("https://autoscribe-ai.onrender.com/api/v1/emailLists");
         if(status === 200) {
           setEmailListsData(data.data)
         }

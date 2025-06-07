@@ -77,7 +77,7 @@ export function Scheduler() {
         });
 
         if (status === 200) {
-          const storeBlog = await axios.post("http://localhost:8000/api/v1/blog/store", {
+          const storeBlog = await axios.post("https://autoscribe-ai.onrender.com/api/v1/blog/store", {
             userName: userName,
             blogContent: data.content,
             schedulerName: schedulerData.scheduleName,
