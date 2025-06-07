@@ -1,0 +1,90 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("NEXT_PUBLIC_DATABASE_URL")
+}
+
+model User {
+  id                  String          @id @default(cuid())
+  email               String          @unique
+  name                String?
+  first_name          String?
+  last_name           String?
+  avatar_url          String?
+  clerkId             String?         @unique
+  meta                Json?
+  workspaces          WorkspaceUser[]
+  onBoardingCompleted Boolean?        @default(false)
+  createdAt           DateTime        @default(now())
+  updatedAt           DateTime        @updatedAt
+  EmailList           EmailList[]
+
+  @@index([name])
+  @@index([createdAt]) // for user analytics / ordering
+}
+
+model Workspace {
+  id        String          @id @default(cuid())
+  name      String
+  logo      String?
+  industry  String?
+  users     WorkspaceUser[]
+  createdAt DateTime        @default(now())
+  EmailList EmailList[]
+
+  @@index([name]) // if you search workspaces by name
+}
+
+model WorkspaceUser {
+  id          String    @id @default(cuid())
+  user        User      @relation(fields: [userId], references: [id])
+  userId      String
+  workspace   Workspace @relation(fields: [workspaceId], references: [id])
+  workspaceId String
+  role        String // "admin", "editor"
+
+  @@index([userId])
+  @@index([workspaceId])
+  @@index([userId, workspaceId]) // for quick access to user in workspace
+  @@index([workspaceId, role]) // if you need to get all admins/editors in a workspace
+}
+
+model EmailList {
+  id          String    @id @default(cuid())
+  name        String
+  workspace   Workspace @relation(fields: [workspaceId], references: [id])
+  workspaceId String
+
+  uploadedBy   User   @relation(fields: [uploadedById], references: [id])
+  uploadedById String
+
+  emails    EmailContact[]
+  createdAt DateTime       @default(now())
+
+  @@index([workspaceId])
+  @@index([uploadedById])
+}
+
+model EmailContact {
+  id          String    @id @default(cuid())
+  email       String
+  emailList   EmailList @relation(fields: [emailListId], references: [id], onDelete: Cascade)
+  emailListId String
+
+  name String?
+  meta Json?
+
+  createdAt DateTime @default(now())
+
+  @@index([emailListId])
+}
