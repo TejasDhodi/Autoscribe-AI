@@ -4,7 +4,9 @@
   "globalEnv": [
     "CLERK_WEBHOOK_SIGNING_SECRET",
     "NEXT_PUBLIC_PIXELBIN_API_KEY",
-    "NEXT_PUBLIC_PIXELBIN_CLOUD_NAME"
+    "NEXT_PUBLIC_PIXELBIN_CLOUD_NAME",
+    "CLERK_SECRET_KEY",
+    "GEMINI_API_KEY"
   ],
   "tasks": {
     "build": {
@@ -14,7 +16,9 @@
       "env": [
         "CLERK_WEBHOOK_SIGNING_SECRET",
         "NEXT_PUBLIC_PIXELBIN_API_KEY",
-        "NEXT_PUBLIC_PIXELBIN_CLOUD_NAME"
+        "NEXT_PUBLIC_PIXELBIN_CLOUD_NAME",
+        "CLERK_SECRET_KEY",
+        "GEMINI_API_KEY"
       ]
     },
     "lint": {
