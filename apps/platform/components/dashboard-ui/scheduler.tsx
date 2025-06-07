@@ -44,9 +44,7 @@ export function Scheduler() {
   const [isBlogGenerated, setIsBlogGenerated] = useState(false); 
   const [previewOpen, setPreviewOpen] = useState(false); 
   const [generatedData, setGeneratedData] = useState<any>(null);
-  const [userName, setUserName] = useState<string | null>(null)
 
-  const {author, loading: authLoading} = useUserDetails();
   const scheduledTasks = [
     {
       id: "1",
@@ -78,7 +76,7 @@ export function Scheduler() {
 
         if (status === 200) {
           const storeBlog = await axios.post("https://autoscribe-ai.onrender.com/api/v1/blog/store", {
-            userName: userName,
+            userName: "Tejas",
             blogContent: data.content,
             schedulerName: schedulerData.scheduleName,
             topic: schedulerData.topic
@@ -96,7 +94,7 @@ export function Scheduler() {
             toast.success(`Content Generated for :- ${schedulerData.topic}`);
 
             const blogData = {
-              userName: userName,
+              userName: "Tejas",
               blogContent: data.content,
               schedulerName: schedulerData.scheduleName,
               topic: schedulerData.topic
@@ -132,12 +130,6 @@ export function Scheduler() {
     }
     
   }, [])
-  
-  useEffect(() => {
-    if (!authLoading) {
-      setUserName(author)
-    }
-  }, []);
 
   return (
     <div className="space-y-6">

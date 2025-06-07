@@ -28,9 +28,6 @@ export const useSchedularLayout = () => {
     topic: "",
     blogId: "",
   });
-
-  const [userName, setUserName] = useState<string | null>(null)
-  const {author, loading: authLoading} = useUserDetails();
   const {emailListsData} = useDashboard();
 
   const onSchedule = useCallback(async () => {
@@ -54,7 +51,7 @@ export const useSchedularLayout = () => {
         selectedWeekday,
         emailList: emailList[0]?.emailList,
         status: "scheduled",
-        author: userName,
+        author: "Tejas",
         blogContent: {
           title: topic,
           body: blogBody
@@ -80,12 +77,6 @@ export const useSchedularLayout = () => {
       toast.warning("Error while scheduling task")
     }
   }, [schedulerData]);
-
-  useEffect(() => {
-    if (!authLoading) {
-      setUserName(author)
-    }
-  }, []);
 
   return {
     schedulerData,
